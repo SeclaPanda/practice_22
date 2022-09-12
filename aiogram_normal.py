@@ -123,13 +123,13 @@ async def reg(message: types.Message, state: FSMContext):
             line = str(msg.from_user.id) + ' - ' + str(msg.from_user.username) + '\n'
             for i in file_group:
                 if line in i:
-                    await msg.reply('Вы уже зарегестрированы')
                     registred = True
-                if not registred:
-                    with open (fi, 'a') as f_g:
-                        f_g.write(str(msg.from_user.id) + ' - ' + str(msg.from_user.username) + '\n')
+                    await msg.reply('Вы уже зарегестрированы')
+            if not registred:
+                with open (fi, 'a') as f_g:
+                    f_g.write(str(msg.from_user.id) + ' - ' + str(msg.from_user.username) + '\n')
                     await msg.answer('Отлично! Теперь ты зарегестрирован')
-    
+
     async def ngr(message: types.Message):
         await message.answer('Enter number of group in format: uis_111')
         await UserState.n_group.set()
