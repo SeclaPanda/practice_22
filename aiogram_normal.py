@@ -29,7 +29,7 @@ async def start(message: types.Message):
         content = s.read()
     await message.reply(content)
     await sleep(1)
-    await message.answer('Если вы студент вам необходимо только зарегестрироваться - /reg')
+    await message.answer('Если вы студент вам необходимо только зарегистрироваться - /reg')
     await sleep(1)
     f = './id.txt' 
     with open(f, "a") as myfile:
@@ -73,19 +73,21 @@ async def snd_msg(message: types.message, state: FSMContext):
     await UserState.text.set()
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton(text = "/work")
-    btn2 = types.KeyboardButton(text = "/help")
-    markup.add(btn1, btn2)
+    btn2 = types.KeyboardButton(text = "/cancel")
+    btn3 = types.KeyboardButton(text = "/help")
+    markup.add(btn1, btn2, btn3)
     with open ('./annotation/after_work.txt') as a_w:
         content = a_w.read()
     await message.answer(content, reply_markup=markup)
 
 @dp.message_handler(state=UserState.text)
 async def snd(message: types.Message, state: FSMContext):
-    await state.update_data(text=message.text)
-    data = await state.get_data()
-    global num
-    for i in num:
-        await bot.forward_message(i, message.from_user.id, message.message_id)
+    if message.text != '/cancel':
+        await state.update_data(text=message.text)
+        data = await state.get_data()
+        global num
+        for i in num:
+            await bot.forward_message(i, message.from_user.id, message.message_id)
     await state.finish()
 
 
@@ -124,11 +126,11 @@ async def reg(message: types.Message, state: FSMContext):
             for i in file_group:
                 if line in i:
                     registred = True
-                    await msg.reply('Вы уже зарегестрированы')
+                    await msg.reply('Вы уже зарегистрированы')
             if not registred:
                 with open (fi, 'a') as f_g:
                     f_g.write(str(msg.from_user.id) + ' - ' + str(msg.from_user.username) + '\n')
-                    await msg.answer('Отлично! Теперь ты зарегестрирован')
+                    await msg.answer('Отлично! Теперь ты зарегистрирован')
 
     async def ngr(message: types.Message):
         await message.answer('Enter number of group in format: uis_111')
@@ -139,7 +141,7 @@ async def reg(message: types.Message, state: FSMContext):
         await state.update_data(n_group=message.text)
         data = await state.get_data()
         with open (f"./groups/{data['n_group']}.txt", 'x') as f:
-            await message.reply('Отлично!  Группа создана! Теперь вернемся через /reg и зарегестрируемся в неё! ЖМИ!')
+            await message.reply('Отлично!  Группа создана! Теперь вернемся через /reg и зарегистрируемся в неё! ЖМИ!')
         await state.finish()
 
 @dp.message_handler(commands='help')
