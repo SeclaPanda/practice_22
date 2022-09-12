@@ -25,7 +25,7 @@ class UserState(StatesGroup):
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
-    with open ('./annotation/start.txt') as s:
+    with open ('./annotation/start.txt', encoding="utf-8") as s:
         content = s.read()
     await message.reply(content)
     await sleep(1)
@@ -76,7 +76,7 @@ async def snd_msg(message: types.message, state: FSMContext):
     btn2 = types.KeyboardButton(text = "/cancel")
     btn3 = types.KeyboardButton(text = "/help")
     markup.add(btn1, btn2, btn3)
-    with open ('./annotation/after_work.txt') as a_w:
+    with open ('./annotation/after_work.txt', encoding="utf-8") as a_w:
         content = a_w.read()
     await message.answer(content, reply_markup=markup)
 
@@ -146,7 +146,7 @@ async def reg(message: types.Message, state: FSMContext):
 
 @dp.message_handler(commands='help')
 async def help(message: types.Message):
-    with open ('./annotation/help.txt') as h:
+    with open ('./annotation/help.txt', encoding="utf-8") as h:
         content = h.read()
     await message.answer(content)
 
