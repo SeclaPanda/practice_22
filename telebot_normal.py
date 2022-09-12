@@ -11,7 +11,7 @@ num = [] #глобальная переменная для работы с id с
 
 @bot.message_handler(commands=['start']) #создаем обработку команды /start
 def start(message): #основная функция работы команды
-    with open ('./annotation/start.txt') as s: 
+    with open ('./annotation/start.txt', encoding="utf-8") as s: 
         content = s.read()
     bot.send_message(message.from_user.id, content) #в предыдущих строчках мы открыли текстовый файл с аннотацией и прочитали его, теперь отправляем пользователю
     sleep(1) #задержка, иначе сообщения будут приходить очень быстро
@@ -55,7 +55,7 @@ def snd_msg(message):
     btn1 = types.KeyboardButton(text = "/work")
     btn2 = types.KeyboardButton(text = "/help")
     markup.add(btn1, btn2)
-    with open ('./annotation/after_work.txt', 'r') as a_w:
+    with open ('./annotation/after_work.txt', 'r', encoding="utf-8") as a_w:
         content = a_w.read()
     bot.send_message(message.from_user.id, content, reply_markup=markup) #читаем и отправляем еще один файл аннотации
 
@@ -107,7 +107,7 @@ def ntxt(message): #создаем файл для новой группы и п
 
 @bot.message_handler(commands=['help']) #обработчик команды help
 def help(message):
-    with open ('./annotation/help.txt', 'r') as h:
+    with open ('./annotation/help.txt', 'r', encoding="utf-8") as h:
         content = h.read() 
     bot.send_message(message.from_user.id, content) #открываем файл с аннотацией и отправляем его содержимое пользователю 
 
