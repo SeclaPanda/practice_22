@@ -231,10 +231,14 @@ async def gr_check(message: types.Message):
     
     @dp.message_handler()# вывод кол-ва студентов в группе
     async def gr(message: types.Message):
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton(text = "/work")
+        btn2 = types.KeyboardButton(text = "/help")
+        markup.add(btn1, btn2)
         cur.execute(f"select count(*) from {message.text}")
         row_count = cur.fetchone()
         await message.answer(f'Количество студентов в группе {message.text} равно {row_count[0]}')
-        await message.answer(f'Моежете вернуться к отправке сообщений студентам с помощью команды /work \nИли же прочитать справку через команду /help ')
+        await message.answer(f'Моежете вернуться к отправке сообщений студентам с помощью команды /work \nИли же прочитать справку через команду /help', reply_markup=markup)
 
 #функция для очистки базы данных
 async def clean():
