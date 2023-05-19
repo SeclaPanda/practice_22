@@ -10,7 +10,7 @@ from aiogram.dispatcher import FSMContext
 
 num = []
 # Объект бота
-bot = Bot(token='5432818658:AAHNCv2cCmy9f2L5aoxgJInct_kP0fZrvvk')
+bot = Bot(token='1390660650:AAH6uCX1VOQZSVbuJQsUoPcf-vKkIt_U-Ds')
 # Диспетчер для бота
 dp = Dispatcher(bot, storage = MemoryStorage())
 # Включаем логирование, чтобы не пропустить важные сообщения
@@ -31,9 +31,9 @@ async def start(message: types.Message):
     await sleep(1)
     await message.answer('Если вы студент вам необходимо только зарегистрироваться - /reg')
     await sleep(1)
-    f = './id.txt' 
+    f = './id.txt'
     with open(f, "a") as myfile:
-        your_variable = str(message.from_user.id) + ' - ' + str(message.from_user.username) + '\n'
+        your_variable = (f'{str(message.from_user.id)} - {str(message.from_user.username)}'+ '\n')
         myfile.write(your_variable)
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton(text = "/work")
