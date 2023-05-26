@@ -1,16 +1,18 @@
 import sqlite3
 from aiogram import Router, F
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
+#from handlers.registration import reg
+#from handlers.registration.reg import UserStates
 
 router = Router()
+#router.message.filter(UserStates.regs)
 conn = sqlite3.connect(r'./groups/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 
 class UserState(StatesGroup): #передача переменных 
     group = State()
-    n_group = State()
 
 @router.message(F.text == 'Новая группа')
 async def ngr(message: Message, state: FSMContext): #сбор названия новой группы
@@ -24,7 +26,7 @@ async def ntxt(message: Message, state: FSMContext):
     query = (
         'CREATE TABLE IF NOT EXISTS '
         + data['group']
-        + ' (userid TEXT PRIMARY KEY, nickname TEXT);'
+        + ' (userid TEXT PRIMARY KEY, nickname TEXT, full_name TEXT);'
     )
     cur.execute(query)
     conn.commit()

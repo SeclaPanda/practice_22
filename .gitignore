@@ -3644,3 +3644,14 @@ id.txt
 modul_bot/handlers/__pycache__/help.cpython-310.pyc
 modul_bot/handlers/registration/__pycache__/cancel.cpython-310.pyc
 modul_bot/handlers/registration/__pycache__/del_reg.cpython-310.pyc
+modul_bot/handlers/__pycache__/cancel.cpython-39.pyc
+modul_bot/handlers/__pycache__/help.cpython-39.pyc
+modul_bot/handlers/registration/__pycache__/cancel.cpython-39.pyc
+modul_bot/handlers/registration/__pycache__/del_reg.cpython-39.pyc
+modul_bot/handlers/registration/__pycache__/gr_upd.cpython-39.pyc
+modul_bot/handlers/registration/__pycache__/n_group.cpython-39.pyc
+modul_bot/handlers/registration/__pycache__/reg.cpython-39.pyc
+modul_bot/handlers/registration/__pycache__/wrt.cpython-39.pyc
+modul_bot/handlers/t_work/__pycache__/work.cpython-39.pyc
+modul_bot/keyboards/__pycache__/work_kb.cpython-39.pyc
+modul_bot/keyboards/__pycache__/y_n_kb.cpython-39.pyc
