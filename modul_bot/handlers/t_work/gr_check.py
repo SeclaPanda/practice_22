@@ -15,15 +15,12 @@ class UserState(StatesGroup): #передача переменных
 
 @router.message(Command('gr_check')) #функция проверки количества студентов в группе
 async def gr_check(message: Message, state: FSMContext):
-    await message.answer('Выберите группу которую хотите проверить на количество зарегестрированных студентов', reply_markup=make_kboard())
     await state.set_state(UserState.num_group)
+    await message.answer('Выберите группу которую хотите проверить на количество зарегестрированных студентов', reply_markup=make_kboard())
     
 @router.message(UserState.num_group)# вывод кол-ва студентов в группе
-async def gr(message: Message):
-    markup = ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = KeyboardButton(text = "/work")
-    btn2 = KeyboardButton(text = "/help")
-    markup.add(btn1, btn2)
+async def gr(message: Message, state: FSMContext):
+    #await state.update_data(num_group = message.text)
     cur.execute(f"select count(*) from {message.text}")
     row_count = cur.fetchone()
     await message.answer(f'Количество студентов в группе {message.text} равно {row_count[0]}')

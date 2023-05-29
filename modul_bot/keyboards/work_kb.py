@@ -17,14 +17,14 @@ def groups_upd(): #функция для обновления списка гр�
     return groups
 
 def make_kboard() -> ReplyKeyboardMarkup:
-    markup = ReplyKeyboardBuilder()
+    kb = ReplyKeyboardBuilder()
     groups = groups_upd()
     for i in groups:
-        markup.button(text = f'{i}')
-    markup.button(text = '/cancel')
-    markup.button(text = '/gr_check')
-    markup.adjust(2)
-    return markup.as_markup(resize_keyboard=True, one_time_keyboard = True)
+        kb.button(text = f'{i}')
+    kb.button(text = '/cancel')
+    kb.button(text = '/gr_check')
+    kb.adjust(2)
+    return kb.as_markup(resize_keyboard=True, one_time_keyboard = True)
 
 def get_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardBuilder()

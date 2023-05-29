@@ -14,10 +14,10 @@ cur = conn.cursor()
 class UserState(StatesGroup): #передача переменных 
     group = State()
 
-@router.message(F.text == 'Новая группа')
+@router.message(F.text.casefold() == 'новая группа')
 async def ngr(message: Message, state: FSMContext): #сбор названия новой группы
-    await message.answer('введите номер группы в формате: uis_111')
     await state.set_state(UserState.group)
+    await message.answer('введите номер группы в формате: uis_111')
 
 @router.message(UserState.group) #функция создания новой группы
 async def ntxt(message: Message, state: FSMContext):

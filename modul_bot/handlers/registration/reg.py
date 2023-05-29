@@ -8,7 +8,7 @@ from keyboards.kb_group import make_kboard, groups_upd
 from handlers.registration import n_group, wrt, del_reg
 
 router = Router()
-router.include_routers(del_reg.router, n_group.router) # wrt.router,
+router.include_routers(del_reg.router, n_group.router)#, wrt.router)
 conn = sqlite3.connect(r'./groups/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 groups = groups_upd()
@@ -23,8 +23,9 @@ async def gr_upd():
 @router.message(Command('reg'))
 async def reg(message: Message, state: FSMContext): 
     #await groups
-    await message.answer("Нажми на кнопку и выбери группу ", reply_markup=make_kboard())
     await state.set_state(UserState.reg)
+    await message.answer("Нажми на кнопку и выбери группу ", reply_markup=make_kboard())
+    
 
 @router.message(UserState.reg, F.text != 'Новая группа')
 #функция регистрации студентов

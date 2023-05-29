@@ -5,7 +5,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from keyboards.kb_group import groups_upd
 from handlers.registration import reg
-
+from aiogram.fsm.storage.memory import MemoryStorage
+storage = MemoryStorage()
 router = Router()
 conn = sqlite3.connect(r'./groups/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
