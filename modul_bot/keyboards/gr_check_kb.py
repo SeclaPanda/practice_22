@@ -2,7 +2,7 @@ import sqlite3, re
 from aiogram.types import ReplyKeyboardMarkup
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-conn = sqlite3.connect(r'./groups/groups.db') #подключение и указатель БД 
+conn = sqlite3.connect(r'modul_bot/database/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 
 def get_kb() -> ReplyKeyboardMarkup:
@@ -24,10 +24,10 @@ def groups_upd(): #функция для обновления списка гр�
     return groups
 
 def make_kboard() -> ReplyKeyboardMarkup:
-    markup = ReplyKeyboardBuilder()
+    kb = ReplyKeyboardBuilder()
     groups = groups_upd()
     for i in groups:
-        markup.button(text = f'{i}')
-    markup.button(text = '/cancel')
-    markup.adjust(2)
-    return markup.as_markup(resize_keyboard=True, one_time_keyboard = True)
+        kb.button(text = f'{i}')
+    kb.button(text = '/cancel')
+    kb.adjust(2)
+    return kb.as_markup(resize_keyboard=True, one_time_keyboard = True)

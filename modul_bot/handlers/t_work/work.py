@@ -11,7 +11,8 @@ from handlers.t_work import gr_check
 
 router = Router()
 router.include_routers(gr_check.router)#, n_group.router , wrt.router)
-conn = sqlite3.connect(r'./groups/groups.db') #подключение и указатель БД 
+
+conn = sqlite3.connect(r'modul_bot/database/groups.db') #подключение и указатель БД  modul_bot/database modul_bot\database
 cur = conn.cursor()
 
 class UserState(StatesGroup): #передача переменных 
@@ -28,10 +29,7 @@ async def work(message: Message, state: FSMContext):
 @router.message(UserState.snd_group, F.text != '/gr_check') #здесь мы собираем id студентов из группы и сообщение преподавателя
 async def snd_msg(message: Message, state: FSMContext):
     if message.text != '/cancel':
-        #global num
         num = []
-        #await state.update_data(group=message.text)
-        #data = await state.get_data()
         query = (f'SELECT userid FROM {message.text};')
         cur.execute(query)
         students = cur.fetchall()
@@ -39,7 +37,6 @@ async def snd_msg(message: Message, state: FSMContext):
             i = str(i)
             i = re.sub("[(|)|'|,]","",i)
             num.append(i)
-        #print(num)
         await state.update_data(snd_group = num)
         await state.set_state(UserState.text)
         await message.answer('Введите текст для отправки: ')
@@ -53,17 +50,10 @@ async def snd_msg(message: Message, state: FSMContext):
 @router.message(UserState.text)
 async def snd(message: Message, state: FSMContext):
     if message.text != '/cancel':
-        #await state.update_data(text = message.text)
-        #data = await state.get_data()
-        #global num
         data = await state.get_data()
-        #print(data)
         for i in data['snd_group']:
-            print(i)
             with contextlib.suppress(Exception):
-                #await router.forward_message(i, message.from_user.id, message.message_id)
-                await message.forward(i)#, message.from_user.id, message.message_id)
-                print (f'send to {i}')
+                await message.forward(i)
         await message.answer('Отлично! Ваше сообщение отправлено! Спасибо, что пользуетесь ботом - "Помощник преподавателя"!', reply_markup=get_kb())
     else:
         await cancel.cmd_cancel(message, state)
