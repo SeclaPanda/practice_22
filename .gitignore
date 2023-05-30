@@ -5046,3 +5046,4 @@ modul_bot/env/Lib/site-packages/tzlocal-5.0.1.dist-info/top_level.txt
 modul_bot/env/Lib/site-packages/tzlocal-5.0.1.dist-info/WHEEL
 modul_bot/env/Lib/site-packages/tzlocal-5.0.1.dist-info/zip-safe
 modul_bot/.env
+modul_bot/__pycache__/config_reader.cpython-39.pyc
