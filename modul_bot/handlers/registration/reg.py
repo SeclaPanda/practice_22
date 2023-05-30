@@ -51,4 +51,4 @@ async def registration(message: Message, state: FSMContext):
     cur.execute(query)
     conn.commit()
     await state.clear()
-    await message.answer('Супер! Теперь ты зарегистрирован. Теперь, просто ожидай сообщений от преподавателей!')
+    await message.answer('Супер! Теперь ты зарегистрирован(-а). Дальше, просто ожидай сообщений от преподавателей!')
