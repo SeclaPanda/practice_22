@@ -8,7 +8,7 @@ from keyboards.gr_check_kb import get_kb, make_kboard
 from keyboards.y_n_kb import get_yes_no_kb
 
 router = Router()
-conn = sqlite3.connect(r'modul_bot/database/groups.db') #подключение и указатель БД 
+conn = sqlite3.connect(r'./modul_bot/database/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 
 class UserState(StatesGroup): #передача переменных 

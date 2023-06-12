@@ -5,12 +5,12 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from keyboards.kb_group import make_kboard, groups_upd
-from handlers.registration import n_group, wrt, del_reg
+from handlers.registration import n_group, del_reg
 
 router = Router()
 router.include_routers(del_reg.router, n_group.router)#, wrt.router)
 
-conn = sqlite3.connect(r'modul_bot/database/groups.db') #подключение и указатель БД 
+conn = sqlite3.connect(r'./modul_bot/database/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 
 class UserState(StatesGroup): #передача переменных 

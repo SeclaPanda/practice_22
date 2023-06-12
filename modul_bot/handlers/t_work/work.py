@@ -12,7 +12,7 @@ from handlers.t_work import gr_check
 router = Router()
 router.include_routers(gr_check.router)#, n_group.router , wrt.router)
 
-conn = sqlite3.connect(r'modul_bot/database/groups.db') #подключение и указатель БД  modul_bot/database modul_bot\database
+conn = sqlite3.connect(r'./modul_bot/database/groups.db') #подключение и указатель БД  modul_bot/database modul_bot\database
 cur = conn.cursor()
 
 class UserState(StatesGroup): #передача переменных 

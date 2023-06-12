@@ -4,7 +4,7 @@ from aiogram.types import Message
 from datetime import datetime
 from keyboards.kb_group import groups_upd
 
-conn = sqlite3.connect(r'modul_bot/database/groups.db') #подключение и указатель БД 
+conn = sqlite3.connect(r'./modul_bot/database/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 
 async def reminder(bot): #напоминалка всем студентам что база скоро очистится

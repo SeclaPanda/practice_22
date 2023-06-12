@@ -8,7 +8,7 @@ from aiogram.fsm.state import StatesGroup, State
 
 router = Router()
 
-conn = sqlite3.connect(r'modul_bot/database/groups.db') #подключение и указатель БД 
+conn = sqlite3.connect(r'./modul_bot/database/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 
 class UserState(StatesGroup): #передача переменных 
