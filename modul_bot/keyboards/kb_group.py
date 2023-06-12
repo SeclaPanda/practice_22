@@ -2,7 +2,7 @@ import sqlite3, re
 from aiogram.types import ReplyKeyboardMarkup
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-conn = sqlite3.connect(r'modul_bot/database/groups.db') #подключение и указатель БД 
+conn = sqlite3.connect(r'./modul_bot/database/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 
 def groups_upd(): #функция для обновления списка групп
