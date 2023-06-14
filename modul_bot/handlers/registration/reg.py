@@ -13,6 +13,10 @@ router.include_routers(del_reg.router, n_group.router)#, wrt.router)
 conn = sqlite3.connect(r'./modul_bot/database/groups.db') #подключение и указатель БД 
 cur = conn.cursor()
 
+async def hascyr(s): #проверка, что буквы русского алфавита
+    lower = set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')
+    return lower.intersection(s.lower()) != set() 
+
 class UserState(StatesGroup): #передача переменных 
     reg = State()
     name = State()
@@ -29,7 +33,7 @@ async def wrt(message: Message, state: FSMContext):
     groups = groups_upd()
     registred = False
     for i in groups:
-        cur.execute(f'SELECT userid FROM {i} where userid = ?', (str(message.from_user.id),))
+        cur.execute(f'SELECT userid FROM "{i}" where userid = ?', (str(message.from_user.id),))
         if cur.fetchone() is not None:
             registred = True
             group = i
@@ -47,8 +51,26 @@ async def registration(message: Message, state: FSMContext):
     data = await state.get_data()
     name = data['name'] 
     group = data['reg']
-    query = f'INSERT INTO {group} VALUES (\'{str(message.from_user.id)}\', \'{message.from_user.username}\', \'{name}\');'
-    cur.execute(query)
-    conn.commit()
-    await state.clear()
-    await message.answer('Супер! Теперь ты зарегистрирован(-а). Дальше, просто ожидай сообщений от преподавателей!')
+    flag = False
+    tmp = [''.join(i.capitalize()) for i in name.split()]
+    name = ' '.join(tmp)
+    print(list(name))
+    for j in list(name):
+        if j == ' ':
+            continue
+        if await hascyr(j) != True:
+            flag = False
+            break
+        else:
+            flag = True
+        print(flag)
+    if flag == True:
+    #if hascyr(name) == True:
+        query = f'INSERT INTO "{group}" VALUES (\'{str(message.from_user.id)}\', \'{message.from_user.username}\', \'{name}\');'
+        cur.execute(query)
+        conn.commit()
+        await state.clear()
+        await message.answer('Супер! Теперь ты зарегистрирован(-а). Дальше, просто ожидай сообщений от преподавателей!')
+    else:
+        await state.set_state(UserState.name)
+        await message.answer('Видимо вы ввели ФИО содержащие символы латиницы! Пожалуйста, введите ФИО на кирилице!')

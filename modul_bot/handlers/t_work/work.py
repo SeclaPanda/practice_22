@@ -30,7 +30,7 @@ async def work(message: Message, state: FSMContext):
 async def snd_msg(message: Message, state: FSMContext):
     if message.text != '/cancel':
         num = []
-        query = (f'SELECT userid FROM {message.text};')
+        query = (f'SELECT userid FROM "{message.text}";')
         cur.execute(query)
         students = cur.fetchall()
         for i in students:

@@ -13,13 +13,11 @@ async def start(message: Message):
     with open ('./annotation/start.txt', encoding="utf-8") as s:
         content = s.read()
     await message.reply(content)
-    #await sleep(1)
     await message.answer('Если вы студент вам необходимо только зарегистрироваться - /reg')
-    #await sleep(1)
     #f = './id.txt'
-    with open(f, "a") as myfile:
-        your_variable = (f'{str(message.from_user.id)} - {str(message.from_user.username)}'+ '\n')
-        myfile.write(your_variable)
+    #with open(f, "a") as myfile:
+    #    your_variable = (f'{str(message.from_user.id)} - {str(message.from_user.username)}'+ '\n')
+    #    myfile.write(your_variable)
     kb = [
         [
             KeyboardButton(text = "/work"),

@@ -26,11 +26,11 @@ async def yes(message: Message):
     groups = groups_upd()
     group = None
     for i in groups:
-        cur.execute(f'SELECT userid FROM {i} where userid = {str(message.from_user.id)}')
+        cur.execute(f'SELECT userid FROM "{i}" where userid = {str(message.from_user.id)}')
         if cur.fetchone() is not None:
             group = i
     if group is not None:
-        cur.execute(f'DELETE FROM {group} where userid = ?', (str(message.from_user.id),))
+        cur.execute(f'DELETE FROM "{group}" where userid = ?', (str(message.from_user.id),))
         conn.commit()
         await message.answer(f'Жаль, конечно, но что поделать! Теперь запись о тебе удалена из группы {group}:( Возвращайся!')
     else: 

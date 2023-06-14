@@ -11,5 +11,5 @@ cur = conn.cursor()
 async def clean():
     groups = groups_upd()
     for i in groups:    
-        cur.execute(f'DROP TABLE IF EXISTS {i};')
+        cur.execute(f'DROP TABLE IF EXISTS "{i}";')
     print(f"База данных была сброшена! Не забудьте сказать студентам, что пора регистрироваться снова! {datetime.now().strftime('%d - %m - %Y')}!")

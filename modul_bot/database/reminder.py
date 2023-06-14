@@ -11,7 +11,7 @@ async def reminder(bot): #напоминалка всем студентам ч�
     num = []
     groups = groups_upd()
     for i in groups:
-        query = f'SELECT userid FROM {i};'
+        query = f'SELECT userid FROM "{i}";'
         cur.execute(query)
         students = cur.fetchall()
         for i in students:

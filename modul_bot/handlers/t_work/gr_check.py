@@ -23,7 +23,7 @@ async def gr_check(message: Message, state: FSMContext):
 @router.message(UserState.num_group)# вывод кол-ва студентов в группе
 async def gr(message: Message, state: FSMContext):
     await state.update_data(num_group = message.text)
-    cur.execute(f"select count(*) from {message.text}")
+    cur.execute(f'select count(*) from "{message.text}"')
     row_count = cur.fetchone()
     await state.set_state(UserState.stud_list)
     await message.answer(f'Количество студентов в группе {message.text} равно {row_count[0]}')
@@ -34,7 +34,7 @@ async def gr(message: Message, state: FSMContext):
 async def stud_list_y(message: Message, state: FSMContext):
     data = await state.get_data()
     num = data['num_group']
-    cur.execute(f'SELECT full_name from {num}')
+    cur.execute(f'SELECT full_name from "{num}"')
     st_list = (cur.fetchall())
     roster = []
     for i in st_list:
