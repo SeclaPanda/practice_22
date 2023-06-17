@@ -1,6 +1,6 @@
-import sqlite3
+import sqlite3, re
 from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 
@@ -34,7 +34,9 @@ async def ntxt(message: Message, state: FSMContext):
             flag = True
         else:
             break
-    if flag == True:
+    pattern = re.compile("\w{3,5}\-\d{3}")
+    res = pattern.match(num_group)
+    if flag == True and res != None:
         query = (
             'CREATE TABLE IF NOT EXISTS "'
             + num_group

@@ -8361,3 +8361,6 @@ modul_bot/handlers/__pycache__/cancel.cpython-310.pyc
 modul_bot/database/__pycache__/clean.cpython-310.pyc
 modul_bot/database/__pycache__/reminder.cpython-310.pyc
 modul_bot/database/groups.db
+modul_bot/handlers/registration/str_try.py
+modul_bot/database/groups.db
+modul_bot/handlers/registration/name_try.py

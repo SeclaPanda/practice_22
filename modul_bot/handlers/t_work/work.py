@@ -18,13 +18,28 @@ cur = conn.cursor()
 class UserState(StatesGroup): #передача переменных 
     snd_group = State()
     text = State()
+    passw = State()
 
 @router.message(Command('work'))
-async def work(message: Message, state: FSMContext):
-    await state.set_state(UserState.snd_group)
-    await message.answer("""Нажмите на кнопку и выберите группу или отмените данное действие через /cancel 
-    \nВы так же можете проверить количество студентов зарегестрированных в группе чтобы свериться со списком и 
+async def ent_passw(message: Message, state: FSMContext):
+    await message.answer("""Введите пароль для работы от лица преподавателя: 
+Вы всегда можете отменить действие командой /cancel""")
+    await state.set_state(UserState.passw)
+    print(UserState.passw)    
+
+@router.message(UserState.passw)
+async def auth(message: Message, state: FSMContext):
+    await state.update_data(passw = message.text)
+    data = await state.get_data()
+    if data['passw'] == '1520':
+        await state.set_state(UserState.snd_group)
+        await message.answer("""Выберите группу которой хотите отправить сообщение или отмените данное действие через /cancel 
+\nВы так же можете проверить количество студентов зарегистрированных в группе с помощью команды /gr_check чтобы свериться со списком и 
 быть уверенным, что все студенты зарегестрированы и получат ваше сообщение!""", reply_markup=make_kboard())
+    else:
+        await state.set_state(UserState.passw)
+        await message.answer("""К сожалению это не правильный пароль! Если вы забыли или еще не знаете его - обратитесь к администратору.
+Так же вы можете отменить текущее действие командой - /cancel""")
 
 @router.message(UserState.snd_group, F.text != '/gr_check') #здесь мы собираем id студентов из группы и сообщение преподавателя
 async def snd_msg(message: Message, state: FSMContext):
