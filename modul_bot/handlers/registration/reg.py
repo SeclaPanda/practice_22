@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, re
 from aiogram import Router, F
 from aiogram.types import Message
 from aiogram.filters import Command
@@ -64,8 +64,9 @@ async def registration(message: Message, state: FSMContext):
         else:
             flag = True
         print(flag)
-    if flag == True:
-    #if hascyr(name) == True:
+    pattern = re.compile("\w+\ \w+|\w+\ \w+\ \w+\ \w+|\w+\ \w+\ \w+") 
+    res = pattern.fullmatch(name)
+    if flag == True and res != None:
         query = f'INSERT INTO "{group}" VALUES (\'{str(message.from_user.id)}\', \'{message.from_user.username}\', \'{name}\');'
         cur.execute(query)
         conn.commit()
@@ -73,4 +74,4 @@ async def registration(message: Message, state: FSMContext):
         await message.answer('Супер! Теперь ты зарегистрирован(-а). Дальше, просто ожидай сообщений от преподавателей!')
     else:
         await state.set_state(UserState.name)
-        await message.answer('Видимо вы ввели ФИО содержащие символы латиницы! Пожалуйста, введите ФИО на кирилице!')
+        await message.answer('Видимо вы ввели что-то не так! Проверьте правильно ввода и повторите попытку')
