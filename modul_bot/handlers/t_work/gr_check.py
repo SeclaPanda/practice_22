@@ -44,7 +44,7 @@ async def stud_list_y(message: Message, state: FSMContext):
     roster = ', '.join(roster)
     await state.clear()
     await message.answer(f'Список зарегестрированных студентов в группе {num} - {roster}')
-    await message.answer(f'Моежете вернуться к отправке сообщений студентам с помощью команды /work \nИли же прочитать справку через команду /help', reply_markup=get_kb())
+    await message.answer(f'Можете вернуться к отправке сообщений студентам с помощью команды /work \nИли же прочитать справку через команду /help', reply_markup=get_kb())
 
 @router.message(UserState.stud_list, F.text.casefold() == 'нет')
 async def stud_list_y(message: Message, state: FSMContext):
