@@ -14,7 +14,7 @@ conn = sqlite3.connect(r'./modul_bot/database/groups.db') #подключени�
 cur = conn.cursor()
 
 async def hascyr(s): #проверка, что буквы русского алфавита
-    lower = set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')
+    lower = set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя-')
     return lower.intersection(s.lower()) != set() 
 
 class UserState(StatesGroup): #передача переменных 
@@ -54,6 +54,7 @@ async def registration(message: Message, state: FSMContext):
     flag = False
     tmp = [''.join(i.capitalize()) for i in name.split()]
     name = ' '.join(tmp)
+    print(tmp)
     print(list(name))
     for j in list(name):
         if j == ' ':
@@ -64,7 +65,8 @@ async def registration(message: Message, state: FSMContext):
         else:
             flag = True
         print(flag)
-    pattern = re.compile("\w+\ \w+|\w+\ \w+\ \w+\ \w+|\w+\ \w+\ \w+") 
+    exp = "\w+\ \w+|\w+\ \w+\ \w+\ \w+|\w+\ \w+\ \w+|\w+\-\w+\ \w+|\w+\-\w+\ \w+\ \w+\ \w+|\w+\-\w+\ \w+\ \w+|\w+\-\w+\ \w+\-\w+|\w+\-\w+\ \w+\-\w+\ \w+\ \w+|\w+\-\w+\ \w+\-\w+\ \w+|\w+\ \w+\-\w+|\w+\ \w+\-\w+\ \w+\ \w+|\w+\ \w+\-\w+\ \w+"
+    pattern = re.compile(exp) 
     res = pattern.fullmatch(name)
     if flag == True and res != None:
         query = f'INSERT INTO "{group}" VALUES (\'{str(message.from_user.id)}\', \'{message.from_user.username}\', \'{name}\');'
